@@ -20,9 +20,9 @@ export function QuestionList({ questions, currentIndex, getRecordingTime }: Ques
           return (
             <div 
               key={idx}
-              className={`flex items-start gap-3 p-3 rounded-lg transition-all duration-300 ${
+              className={`flex items-start gap-3 p-3  transition-all duration-300 ${
                 isActive 
-                  ? 'bg-blue-50 border-l-4 border-primary shadow-sm' 
+                  ? ' border-l-4 border-primary ' 
                   : isPast 
                     ? 'border-l-4 border-emerald-500 opacity-60 hover:opacity-100 bg-gray-50/50' 
                     : 'border-l-4 border-transparent hover:bg-gray-50'

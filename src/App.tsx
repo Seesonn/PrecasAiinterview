@@ -66,7 +66,7 @@ function generateQuestions(): string[] {
   return [...FIXED_QUESTIONS, ...shuffledTopics, ...shuffledTricky];
 }
 
-const getRecordingTime = (index: number) => index === 0 ? 30 : 45;
+const getRecordingTime = (index: number) => index === 0 ? 30 : index >= 10 ? 30 : 45;
 const getReadingTime = (index: number) => 15;
 
 type AppState =

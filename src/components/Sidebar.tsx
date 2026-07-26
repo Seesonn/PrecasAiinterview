@@ -10,7 +10,7 @@ export function Sidebar({ isDone = false }: SidebarProps) {
     <div className="w-[280px] h-full flex flex-col bg-sidebar text-sidebar-foreground border-r border-sidebar-border shadow-lg z-10 shrink-0">
       <div className="p-6">
         <div className="flex items-center gap-2 mb-8">
-          <img src={ulawLogo} alt="University of Law Logo" className="h-12 w-auto" />
+          <img src={ulawLogo} alt="University of Law Logo" className="h-26 w-auto" />
         </div>
         
         <p className="text-sidebar-foreground/70 text-sm mb-6 uppercase tracking-wider font-semibold">
@@ -45,7 +45,7 @@ export function Sidebar({ isDone = false }: SidebarProps) {
 
       <div className="mt-auto p-6 border-t border-sidebar-foreground/10 text-sm flex flex-col gap-3">
         <div className="text-sidebar-foreground/60 uppercase tracking-widest text-xs font-semibold">
-          STUDENT: 1776255421
+          STUDENT:12345677
         </div>
         <button className="flex items-center gap-2 text-sidebar-foreground hover:text-white transition-colors py-2">
           <LogOut className="w-4 h-4" />
