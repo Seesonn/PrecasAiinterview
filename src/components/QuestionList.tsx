@@ -1,5 +1,4 @@
 import React from 'react';
-import { motion } from 'framer-motion';
 import { Video } from 'lucide-react';
 
 interface QuestionListProps {
@@ -21,15 +20,15 @@ export function QuestionList({ questions, currentIndex, getRecordingTime }: Ques
           return (
             <div 
               key={idx}
-              className={`flex items-start gap-3 p-3 rounded-lg transition-all duration-300 border-l-4 ${
+              className={`flex items-start gap-3 p-3 rounded-lg transition-all duration-300 ${
                 isActive 
-                  ? 'bg-blue-50 border-primary shadow-sm' 
+                  ? 'bg-blue-50 border-l-4 border-primary shadow-sm' 
                   : isPast 
-                    ? 'border-emerald-500 opacity-60 hover:opacity-100 bg-gray-50/50' 
-                    : 'border-transparent hover:bg-gray-50'
+                    ? 'border-l-4 border-emerald-500 opacity-60 hover:opacity-100 bg-gray-50/50' 
+                    : 'border-l-4 border-transparent hover:bg-gray-50'
               }`}
             >
-              <div className={`w-7 h-7 rounded-full flex items-center justify-center shrink-0 font-semibold text-[11px] ${
+              <div className={`w-6 h-6 rounded flex items-center justify-center shrink-0 font-semibold text-[10px] ${
                 isActive 
                   ? 'bg-primary text-white' 
                   : isPast 
