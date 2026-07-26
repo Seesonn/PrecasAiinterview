@@ -349,7 +349,7 @@ export default function InterviewFlow() {
 
           <div className="mb-6">
             <h2 className="text-base font-bold text-gray-900 mb-2">
-              Complete your recorded video interview
+              Complete your recorded Pre-Cas AI Interview
             </h2>
             <p className="text-xs text-gray-600 leading-relaxed">
               You need to complete a short video recording of yourself answering
@@ -368,8 +368,8 @@ export default function InterviewFlow() {
               </h3>
               <p className="text-xs text-gray-600 mb-4">
                 {isComplete
-                  ? 'Your recorded video interview is complete.'
-                  : 'You have been asked to complete a recorded video interview.'}
+                  ? 'Your recorded Pre-Cas AI Interview is complete.'
+                  : 'You have been asked to complete a recorded Pre-Cas AI Interview.'}
               </p>
               {!isComplete && (
                 <button
