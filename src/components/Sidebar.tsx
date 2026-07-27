@@ -1,11 +1,15 @@
-import { CircleCheck, CircleDashed, CheckCircle2, ChevronLeft, LogOut, Video } from 'lucide-react';
+import { CircleCheck, CircleDashed, CheckCircle2, LogOut, BookOpen } from 'lucide-react';
 import ulawLogo from '../assest/ulaw.webp';
+
+export type SidebarSection = 'checklist' | 'documents' | 'interviews' | 'questionbank';
 
 interface SidebarProps {
   isDone?: boolean;
+  activeSection?: SidebarSection;
+  onSectionChange?: (section: SidebarSection) => void;
 }
 
-export function Sidebar({ isDone = false }: SidebarProps) {
+export function Sidebar({ isDone = false, activeSection = 'interviews', onSectionChange }: SidebarProps) {
   return (
     <div className="w-[280px] h-full flex flex-col bg-sidebar text-sidebar-foreground border-r border-sidebar-border shadow-lg z-10 shrink-0">
       <div className="p-6">
@@ -18,27 +22,39 @@ export function Sidebar({ isDone = false }: SidebarProps) {
         </p>
 
         <nav className="space-y-1 relative">
-          {/* Vertical progress line */}
           <div className="absolute left-[15px] top-4 bottom-4 w-px bg-sidebar-foreground/10 -z-10" />
           
           <NavItem 
             icon={<CheckCircle2 className="w-5 h-5 text-emerald-400" />} 
             label="CAS Checklist" 
             badge="Done" 
-            badgeColor="emerald" 
+            badgeColor="emerald"
+            active={activeSection === 'checklist'}
+            onClick={() => onSectionChange?.('checklist')}
           />
           <NavItem 
             icon={<CheckCircle2 className="w-5 h-5 text-emerald-400" />} 
             label="General Documents" 
             badge="Done" 
-            badgeColor="emerald" 
+            badgeColor="emerald"
+            active={activeSection === 'documents'}
+            onClick={() => onSectionChange?.('documents')}
           />
           <NavItem 
             icon={isDone ? <CheckCircle2 className="w-5 h-5 text-emerald-400" /> : <CircleDashed className="w-5 h-5 text-primary" />} 
             label="Interviews" 
             badge={isDone ? "Done" : "New"} 
             badgeColor={isDone ? "emerald" : "blue"}
-            active={!isDone}
+            active={activeSection === 'interviews'}
+            onClick={() => onSectionChange?.('interviews')}
+          />
+          <NavItem 
+            icon={<BookOpen className="w-5 h-5 text-amber-400" />} 
+            label="Question Bank" 
+            badge="60+" 
+            badgeColor="blue"
+            active={activeSection === 'questionbank'}
+            onClick={() => onSectionChange?.('questionbank')}
           />
         </nav>
       </div>
@@ -56,9 +72,12 @@ export function Sidebar({ isDone = false }: SidebarProps) {
   );
 }
 
-function NavItem({ icon, label, badge, badgeColor, active }: { icon: React.ReactNode, label: string, badge: string, badgeColor: 'emerald' | 'blue', active?: boolean }) {
+function NavItem({ icon, label, badge, badgeColor, active, onClick }: { icon: React.ReactNode, label: string, badge: string, badgeColor: 'emerald' | 'blue', active?: boolean, onClick?: () => void }) {
   return (
-    <button className={`w-full flex items-center gap-3 p-3 rounded-lg transition-colors relative ${active ? 'bg-sidebar-foreground/10 text-white' : 'hover:bg-sidebar-foreground/5 text-sidebar-foreground/80'}`}>
+    <button
+      onClick={onClick}
+      className={`w-full flex items-center gap-3 p-3 rounded-lg transition-colors relative ${active ? 'bg-sidebar-foreground/10 text-white' : 'hover:bg-sidebar-foreground/5 text-sidebar-foreground/80'}`}
+    >
       <div className="shrink-0 bg-sidebar flex items-center justify-center relative z-10 w-8 h-8 -ml-1.5">
         {icon}
       </div>

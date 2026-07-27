@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Sidebar } from '@/components/Sidebar';
+import { Sidebar, SidebarSection } from '@/components/Sidebar';
 import { BluePanelLayout } from '@/components/BluePanelLayout';
 import { QuestionList } from '@/components/QuestionList';
 import { CountdownTimer } from '@/components/CountdownTimer';
@@ -51,6 +51,140 @@ const TRICKY_QUESTIONS = [
   "What will you do if you struggle with the academic demands of this course?",
   "What do you do when you are feeling stressed?",
   "Where do you plan to visit in the UK?",
+];
+
+// ─── Full pre-CAS interview question bank (60+ questions) ──────────────────
+interface QuestionCategory {
+  title: string;
+  color: string;
+  questions: string[];
+}
+
+const ALL_PRECAS_QUESTIONS: QuestionCategory[] = [
+  {
+    title: 'Why UK & Study Abroad',
+    color: 'bg-blue-500',
+    questions: [
+      "Why do you want to study in the UK specifically?",
+      "Why did you choose the UK over the USA, Canada, or Australia?",
+      "Why not study in your home country?",
+      "Why not study in another country besides the UK?",
+      "What advantages does a UK degree have over a degree from your home country?",
+      "Why did you not choose a university in Europe or Asia?",
+      "How is the UK education system different from your home country?",
+      "What do you know about the UK culture and education system?",
+    ],
+  },
+  {
+    title: 'University Choice',
+    color: 'bg-violet-500',
+    questions: [
+      "Why did you choose this particular university?",
+      "Why not choose another UK university for this course?",
+      "What makes this university stand out from others?",
+      "How did you research this university?",
+      "What do you know about the ranking and reputation of this university?",
+      "Did you apply to any other UK universities? Which ones?",
+      "Why did you not choose Russell Group universities like Oxford, Cambridge, or LSE?",
+    ],
+  },
+  {
+    title: 'Course & Modules',
+    color: 'bg-amber-500',
+    questions: [
+      "Why did you choose this particular course?",
+      "Can you tell me about the modules on this course?",
+      "Which modules interest you the most and why?",
+      "How does this course relate to your previous studies?",
+      "How does this course relate to your future career goals?",
+      "What will you learn from this course that you cannot learn in your home country?",
+      "Can you describe the course structure and assessment methods?",
+      "What is the difference between this course and a similar course at another university?",
+    ],
+  },
+  {
+    title: 'Future Plans & Career',
+    color: 'bg-emerald-500',
+    questions: [
+      "What are your plans after you complete this course?",
+      "Will you return to your home country after your studies?",
+      "How will this degree help your career in your home country?",
+      "What job role are you targeting after graduation?",
+      "What is the graduate employment market like in your field in your home country?",
+      "Do you plan to work in the UK after your studies?",
+      "What are your long-term career goals?",
+      "How does studying in the UK give you a competitive advantage in your career?",
+    ],
+  },
+  {
+    title: 'Financial Questions',
+    color: 'bg-orange-500',
+    questions: [
+      "How will you fund your studies in the UK?",
+      "Who is sponsoring your education?",
+      "What is your sponsor's occupation and annual income?",
+      "How will you cover your living expenses in the UK?",
+      "Do you have a student loan? From which bank?",
+      "Can you show evidence of your financial capability?",
+      "How much do you expect your total cost of study and living to be?",
+      "What will you do if you face financial difficulties during your studies?",
+    ],
+  },
+  {
+    title: 'Accommodation & Living',
+    color: 'bg-teal-500',
+    questions: [
+      "Where will you be living during your studies?",
+      "What are your accommodation plans in the UK?",
+      "Why did you choose this accommodation?",
+      "How much is your rent per month?",
+      "Do you know the area where you will be living?",
+      "How will you manage your day-to-day expenses in the UK?",
+      "Are you planning to share accommodation with anyone?",
+    ],
+  },
+  {
+    title: 'Background, Gaps & Work Experience',
+    color: 'bg-rose-500',
+    questions: [
+      "Can you explain any gaps in your academic or employment history?",
+      "What have you been doing since your last qualification?",
+      "What work experience do you have in your field?",
+      "How does your work experience relate to this course?",
+      "Why did you leave your previous job?",
+      "What is your current occupation?",
+      "Can you tell me about your educational background?",
+      "Why did you switch from your previous field to this course?",
+    ],
+  },
+  {
+    title: 'Cultural & Personal',
+    color: 'bg-cyan-500',
+    questions: [
+      "How will you manage the cultural differences between your country and the UK?",
+      "What do you know about life in the UK?",
+      "How will you handle being away from your family?",
+      "What will you do if you feel homesick?",
+      "How will you adjust to the UK weather and lifestyle?",
+      "What do you plan to do outside of your studies?",
+      "Where do you plan to visit in the UK?",
+      "What do you do when you are feeling stressed?",
+    ],
+  },
+  {
+    title: 'Tricky & Challenging',
+    color: 'bg-red-500',
+    questions: [
+      "How do we know you are a genuine student and not using this as a pathway to immigration?",
+      "If your visa application is refused, what will you do?",
+      "What would you do if you failed this course?",
+      "What will you do if you struggle with the academic demands?",
+      "What makes you different from other applicants?",
+      "If you could choose any university in the world, why not the US, Australia, or Canada?",
+      "What do you know about the UK graduate employment market in your field?",
+      "Why should we give you a place on this course?",
+    ],
+  },
 ];
 
 function shuffleArray<T>(array: T[]): T[] {
@@ -219,6 +353,7 @@ export default function InterviewFlow() {
   const [isActivelyRecording, setIsActivelyRecording] = useState(false);
   const [uploadProgress, setUploadProgress] = useState(0);
   const [isReviewPlaying, setIsReviewPlaying] = useState(false);
+  const [activeSection, setActiveSection] = useState<SidebarSection>('interviews');
 
   const nextState = (state: AppState) => {
     window.scrollTo(0, 0);
@@ -333,64 +468,183 @@ export default function InterviewFlow() {
 
   const renderDashboard = (isComplete: boolean) => (
     <div className="flex h-screen w-full bg-gray-50 overflow-hidden font-sans">
-      <Sidebar isDone={isComplete} />
+      <Sidebar isDone={isComplete} activeSection={activeSection} onSectionChange={setActiveSection} questionCategories={ALL_PRECAS_QUESTIONS} />
       <div className="flex-1 overflow-y-auto p-12 lg:p-16">
-        <div className="max-w-3xl">
-          <button className="flex items-center gap-2 text-xs font-semibold text-gray-500 hover:text-gray-900 transition-colors mb-8 rounded-sm">
-            <ChevronLeft className="w-4 h-4" />
-            Previous task
-          </button>
-
-          <h1 className="text-2xl font-bold text-gray-900 mb-3 tracking-tight">
-            Interviews
-          </h1>
-          <p className="text-sm text-gray-600 mb-8 leading-relaxed">
-            You have been invited to complete the following interviews. Please
-            follow the instructions below.
-          </p>
-
-          <div className="mb-6">
-            <h2 className="text-base font-bold text-gray-900 mb-2">
-              Complete your recorded Pre-Cas AI Interview
-            </h2>
-            <p className="text-xs text-gray-600 leading-relaxed">
-              You need to complete a short video recording of yourself answering
-              some questions. You can do this at a time that is convenient for
-              you, but please ensure that you have a good internet connection,
-              and a working camera and microphone. Please have your passport
-              ready before starting.
-            </p>
-          </div>
-
-          <div className="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden relative">
-            <div className="absolute left-0 top-0 bottom-0 w-1.5 bg-amber-400 rounded-l-2xl" />
-            <div className="p-5 pl-8">
-              <h3 className="text-base font-bold text-gray-900 mb-1">
-                Credibility Interview
-              </h3>
-              <p className="text-xs text-gray-600 mb-4">
-                {isComplete
-                  ? 'Your recorded Pre-Cas AI Interview is complete.'
-                  : 'You have been asked to complete a recorded Pre-Cas AI Interview.'}
-              </p>
-              {!isComplete && (
-                <button
-                  onClick={handleStartInterview}
-                  className="bg-primary hover:bg-blue-800 text-white px-4 py-2 rounded-sm font-semibold transition-colors text-xs shadow-sm"
-                >
-                  Start interview
-                </button>
-              )}
-            </div>
-          </div>
-
-          <div className="mt-6">
-            <button className="flex items-center gap-2 text-xs font-semibold text-gray-500 hover:text-gray-900 transition-colors bg-white border border-gray-200 px-3 py-1.5 rounded-sm">
+        {activeSection === 'checklist' && (
+          <div className="max-w-3xl">
+            <button className="flex items-center gap-2 text-xs font-semibold text-gray-500 hover:text-gray-900 transition-colors mb-8 rounded-sm">
               <ChevronLeft className="w-4 h-4" />
               Previous task
             </button>
+
+            <h1 className="text-2xl font-bold text-gray-900 mb-3 tracking-tight">
+              CAS Checklist
+            </h1>
+            <p className="text-sm text-gray-600 mb-8 leading-relaxed">
+              Below is your CAS (Confirmation of Acceptance for Studies) checklist. All items must be completed before your interview.
+            </p>
+
+            <div className="space-y-3">
+              {[
+                { label: 'Passport Copy', done: true },
+                { label: 'Academic Transcripts', done: true },
+                { label: 'English Language Certificate', done: true },
+                { label: 'CAS Statement', done: true },
+                { label: 'Financial Evidence', done: true },
+                { label: 'ATAS Certificate (if applicable)', done: true },
+                { label: 'TB Test Certificate (if applicable)', done: true },
+              ].map((item, i) => (
+                <div key={i} className="flex items-center gap-3 bg-white rounded-xl border border-gray-200 p-4 shadow-sm">
+                  <div className={`w-6 h-6 rounded-full flex items-center justify-center ${item.done ? 'bg-emerald-500' : 'bg-gray-200'}`}>
+                    {item.done && <Check className="w-3.5 h-3.5 text-white" strokeWidth={3} />}
+                  </div>
+                  <span className={`text-sm font-medium ${item.done ? 'text-gray-700' : 'text-gray-500'}`}>{item.label}</span>
+                  {item.done && <span className="ml-auto text-xs font-semibold text-emerald-600 uppercase tracking-wider">Complete</span>}
+                </div>
+              ))}
+            </div>
           </div>
-        </div>
+        )}
+
+        {activeSection === 'documents' && (
+          <div className="max-w-3xl">
+            <button className="flex items-center gap-2 text-xs font-semibold text-gray-500 hover:text-gray-900 transition-colors mb-8 rounded-sm">
+              <ChevronLeft className="w-4 h-4" />
+              Previous task
+            </button>
+
+            <h1 className="text-2xl font-bold text-gray-900 mb-3 tracking-tight">
+              General Documents
+            </h1>
+            <p className="text-sm text-gray-600 mb-8 leading-relaxed">
+              Please review the general documents required for your application. All documents have been uploaded and verified.
+            </p>
+
+            <div className="space-y-3">
+              {[
+                { name: 'Passport Bio Page', type: 'PDF', size: '2.4 MB' },
+                { name: 'Academic Transcript', type: 'PDF', size: '1.8 MB' },
+                { name: 'English Language Certificate (IELTS)', type: 'PDF', size: '890 KB' },
+                { name: 'Personal Statement', type: 'PDF', size: '156 KB' },
+                { name: 'Reference Letter 1', type: 'PDF', size: '320 KB' },
+                { name: 'Reference Letter 2', type: 'PDF', size: '298 KB' },
+                { name: 'CV / Resume', type: 'PDF', size: '210 KB' },
+              ].map((doc, i) => (
+                <div key={i} className="flex items-center gap-3 bg-white rounded-xl border border-gray-200 p-4 shadow-sm">
+                  <div className="w-10 h-10 rounded-lg bg-blue-50 flex items-center justify-center">
+                    <span className="text-xs font-bold text-primary">{doc.type}</span>
+                  </div>
+                  <div className="flex-1">
+                    <p className="text-sm font-medium text-gray-700">{doc.name}</p>
+                    <p className="text-xs text-gray-400">{doc.size}</p>
+                  </div>
+                  <CheckCircle2 className="w-5 h-5 text-emerald-500" />
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {activeSection === 'interviews' && (
+          <div className="max-w-3xl">
+            <button className="flex items-center gap-2 text-xs font-semibold text-gray-500 hover:text-gray-900 transition-colors mb-8 rounded-sm">
+              <ChevronLeft className="w-4 h-4" />
+              Previous task
+            </button>
+
+            <h1 className="text-2xl font-bold text-gray-900 mb-3 tracking-tight">
+              Interviews
+            </h1>
+            <p className="text-sm text-gray-600 mb-8 leading-relaxed">
+              You have been invited to complete the following interviews. Please
+              follow the instructions below.
+            </p>
+
+            <div className="mb-6">
+              <h2 className="text-base font-bold text-gray-900 mb-2">
+                Complete your recorded Pre-Cas AI Interview
+              </h2>
+              <p className="text-xs text-gray-600 leading-relaxed">
+                You need to complete a short video recording of yourself answering
+                some questions. You can do this at a time that is convenient for
+                you, but please ensure that you have a good internet connection,
+                and a working camera and microphone. Please have your passport
+                ready before starting.
+              </p>
+            </div>
+
+            <div className="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden relative">
+              <div className="absolute left-0 top-0 bottom-0 w-1.5 bg-amber-400 rounded-l-2xl" />
+              <div className="p-5 pl-8">
+                <h3 className="text-base font-bold text-gray-900 mb-1">
+                  Credibility Interview
+                </h3>
+                <p className="text-xs text-gray-600 mb-4">
+                  {isComplete
+                    ? 'Your recorded Pre-Cas AI Interview is complete.'
+                    : 'You have been asked to complete a recorded Pre-Cas AI Interview.'}
+                </p>
+                {!isComplete && (
+                    <button
+                      onClick={handleStartInterview}
+                      className="bg-primary hover:bg-blue-800 text-white px-4 py-2 rounded-sm font-semibold transition-colors text-xs shadow-sm"
+                    >
+                      Start interview
+                    </button>
+                  )}
+              </div>
+            </div>
+
+            <div className="mt-6">
+              <button className="flex items-center gap-2 text-xs font-semibold text-gray-500 hover:text-gray-900 transition-colors bg-white border border-gray-200 px-3 py-1.5 rounded-sm">
+                <ChevronLeft className="w-4 h-4" />
+                Previous task
+              </button>
+            </div>
+          </div>
+        )}
+
+        {activeSection === 'questionbank' && (
+          <div className="max-w-4xl">
+            <button className="flex items-center gap-2 text-xs font-semibold text-gray-500 hover:text-gray-900 transition-colors mb-8 rounded-sm">
+              <ChevronLeft className="w-4 h-4" />
+              Previous task
+            </button>
+
+            <h1 className="text-2xl font-bold text-gray-900 mb-3 tracking-tight">
+              Pre-CAS Question Bank
+            </h1>
+            <p className="text-sm text-gray-600 mb-8 leading-relaxed">
+              Complete list of 60+ questions across 9 categories. These questions may appear during your credibility interview.
+            </p>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+              {ALL_PRECAS_QUESTIONS.map((category, catIdx) => (
+                <div key={catIdx} className="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden">
+                  <div className="flex items-center gap-3 px-5 py-3 border-b border-gray-100">
+                    <div className={`w-3 h-3 rounded-full ${category.color}`} />
+                    <h3 className="text-sm font-bold text-gray-900 flex-1">
+                      {category.title}
+                    </h3>
+                    <span className="bg-gray-100 text-gray-500 text-[10px] font-bold px-2 py-0.5 rounded-full">
+                      {category.questions.length}
+                    </span>
+                  </div>
+                  <div className="p-4 space-y-2">
+                    {category.questions.map((q, qIdx) => (
+                      <div key={qIdx} className="flex items-start gap-2.5">
+                        <span className="w-5 h-5 rounded-full bg-gray-100 text-gray-400 text-[10px] font-bold flex items-center justify-center shrink-0 mt-0.5">
+                          {qIdx + 1}
+                        </span>
+                        <p className="text-xs text-gray-600 leading-relaxed">{q}</p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
