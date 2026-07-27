@@ -8,7 +8,6 @@ import { VideoPreview } from '@/components/VideoPreview';
 import { CashShieldLanding } from '@/components/CashShieldLanding';
 import {
   ChevronLeft,
-  Video,
   CheckCircle2,
   Loader2,
   AlertCircle,
@@ -726,7 +725,6 @@ export default function InterviewFlow() {
           className="bg-white rounded-3xl p-10 w-full max-w-2xl shadow-2xl text-center flex flex-col items-center"
         >
           <div className="flex items-center gap-2 text-[11px] font-bold text-gray-500 uppercase tracking-wider mb-4 bg-gray-50 px-3 py-1.5 rounded-full">
-            <Video className="w-3.5 h-3.5" />
             <span>Video Response &bull; {getRecordingTime(currentQuestionIndex)} Seconds &bull; 1 Take</span>
           </div>
 
@@ -770,7 +768,6 @@ export default function InterviewFlow() {
           className="bg-white rounded-3xl p-10 w-full max-w-2xl shadow-2xl"
         >
           <div className="flex items-center gap-2 text-[11px] font-bold text-gray-500 uppercase tracking-wider mb-4 bg-gray-50 px-3 py-1.5 rounded-full w-fit">
-            <Video className="w-3.5 h-3.5" />
             <span>Video Response &bull; {getRecordingTime(currentQuestionIndex)} Seconds &bull; 1 Take</span>
           </div>
 

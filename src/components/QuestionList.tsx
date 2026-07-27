@@ -1,5 +1,4 @@
 import React from 'react';
-import { Video } from 'lucide-react';
 
 interface QuestionListProps {
   questions: string[];
@@ -46,7 +45,6 @@ export function QuestionList({ questions, currentIndex, getRecordingTime }: Ques
                 </div>
                 
                 <div className="flex items-center gap-1.5 text-[10px] font-medium text-gray-500 uppercase tracking-wider">
-                  <Video className="w-3 h-3" />
                   <span>Video Response &bull; {getRecordingTime ? getRecordingTime(idx) : 45} Seconds &bull; 1 Take</span>
                 </div>
               </div>
