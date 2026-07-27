@@ -188,7 +188,7 @@ export function VideoPreview({
                 <div className="absolute bottom-5 inset-x-0 flex justify-center">
                   <button
                     onClick={onStop}
-                    className="flex items-center gap-2 bg-red-500 hover:bg-red-600 active:scale-95 text-white px-4 py-1.5 rounded-sm font-semibold uppercase tracking-wider text-[10px] transition-all shadow-lg"
+                    className="flex items-center gap-2 bg-red-400 hover:bg-red-600 active:scale-95 text-white px-4 py-1.5 rounded-sm font-semibold uppercase tracking-wider text-[10px] transition-all shadow-lg"
                   >
                     <Square className="w-3.5 h-3.5 fill-current" />
                     Stop Recording

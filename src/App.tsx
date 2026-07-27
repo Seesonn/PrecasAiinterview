@@ -49,6 +49,8 @@ const TRICKY_QUESTIONS = [
   "What are your plans after you complete this course? Will you return to your home country?",
   "If you could choose any university in the world, why did you not choose one in the US, Australia, or Canada?",
   "What will you do if you struggle with the academic demands of this course?",
+  "What do you do when you are feeling stressed?",
+  "Where do you plan to visit in the UK?",
 ];
 
 function shuffleArray<T>(array: T[]): T[] {
@@ -595,7 +597,7 @@ export default function InterviewFlow() {
             </h3>
           </div>
 
-          <div className="review-video-wrapper relative w-[280px] h-[157px] mx-auto rounded-[10px] border-2 border-[#2F5BFF] overflow-hidden mb-4">
+          <div className="review-video-wrapper relative w-[280px] h-[157px] mx-auto rounded-[10px] overflow-hidden mb-4">
             <VideoPreview
               mode="playback"
               videoBlob={recordedAnswers[currentQuestionIndex]}

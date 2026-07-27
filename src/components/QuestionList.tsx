@@ -22,24 +22,24 @@ export function QuestionList({ questions, currentIndex, getRecordingTime }: Ques
               key={idx}
               className={`flex items-start gap-3 p-3  transition-all duration-300 ${
                 isActive 
-                  ? ' border-l-4 border-primary ' 
+                  ? ' border-l-4 border-orange-300 ' 
                   : isPast 
-                    ? 'border-l-4 border-emerald-500 opacity-60 hover:opacity-100 bg-gray-50/50' 
+                    ? 'border-l-4 border-emerald-300 opacity-60 hover:opacity-100 bg-gray-50/50' 
                     : 'border-l-4 border-transparent hover:bg-gray-50'
               }`}
             >
-              <div className={`w-6 h-6 rounded flex items-center justify-center shrink-0 font-semibold text-[10px] ${
+              <div className={`w-6 h-6 rounded flex items-center justify-center shrink-0 font-medium text-[10px] ${
                 isActive 
-                  ? 'bg-primary text-white' 
+                  ? 'bg-yellow-300 text-yellow-800' 
                   : isPast 
-                    ? 'bg-emerald-500 text-white' 
+                    ? 'bg-emerald-300 text-emerald-800' 
                     : 'bg-gray-200 text-gray-600'
               }`}>
                 {idx + 1}
               </div>
               
               <div className="flex-1 min-w-0 pt-0.5">
-                <div className={`font-medium text-xs leading-snug mb-1 ${
+                <div className={`font-normal text-xs leading-snug mb-1 ${
                   isActive ? 'text-gray-900' : 'text-gray-600'
                 }`}>
                   Question {idx + 1}
