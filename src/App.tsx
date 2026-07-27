@@ -811,14 +811,16 @@ export default function InterviewFlow() {
         </div>
       }
       rightContent={
-        <div className="w-[60%]">
-          <VideoPreview
-            mode="record"
-            isRecording={isActivelyRecording}
-            timeRemaining={recordingTime}
-            onStop={handleUserClickStop}
-            onRecordingComplete={handleStopRecording}
-          />
+        <div className="flex items-center justify-center">
+          <div className="w-[540px] h-[304px]">
+            <VideoPreview
+              mode="record"
+              isRecording={isActivelyRecording}
+              timeRemaining={recordingTime}
+              onStop={handleUserClickStop}
+              onRecordingComplete={handleStopRecording}
+            />
+          </div>
         </div>
       }
     />
