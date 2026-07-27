@@ -838,17 +838,17 @@ export default function InterviewFlow() {
         </div>
       }
       rightContent={
-        <div className="bg-white rounded-[20px] p-7 w-[560px] shadow-2xl">
-          <div className="text-center mb-4">
-            <p className="text-xs font-bold text-gray-500 uppercase tracking-wider mb-1">
+        <div className="bg-white rounded-[20px] p-5 w-[520px] shadow-2xl">
+          <div className="text-center mb-3">
+            <p className="text-[10px] font-bold text-gray-500 uppercase tracking-wider mb-1">
               Question {currentQuestionIndex + 1} / {questions.length}
             </p>
-            <h3 className="text-sm font-semibold text-gray-900">
+            <h3 className="text-xs font-semibold text-gray-900">
               Click Submit to move to the next question
             </h3>
           </div>
 
-          <div className="review-video-wrapper relative w-[280px] h-[157px] mx-auto rounded-[10px] overflow-hidden mb-4">
+          <div className="review-video-wrapper relative w-[320px] h-[180px] mx-auto rounded-[10px] overflow-hidden mb-3">
             <VideoPreview
               mode="playback"
               videoBlob={recordedAnswers[currentQuestionIndex]}
@@ -868,21 +868,23 @@ export default function InterviewFlow() {
                   }
                 }}
               >
-                <div className="w-12 h-12 rounded-full bg-white/90 flex items-center justify-center shadow-lg">
-                  <Play className="w-5 h-5 text-gray-800 ml-0.5" fill="currentColor" />
+                <div className="w-10 h-10 rounded-full bg-white/90 flex items-center justify-center shadow-lg">
+                  <Play className="w-4 h-4 text-gray-800 ml-0.5" fill="currentColor" />
                 </div>
               </button>
             )}
           </div>
 
-          <div className="flex items-center justify-between mb-4">
+          <div className="flex items-center justify-between mb-3">
             <div className="flex items-center gap-1.5">
-              <Check className="w-4 h-4 text-gray-700 stroke-[3]" />
-              <span className="text-sm font-medium text-gray-700">
+              <div className="w-5 h-5 rounded-full bg-primary flex items-center justify-center">
+                <Check className="w-3 h-3 text-white stroke-[3]" />
+              </div>
+              <span className="text-xs font-medium text-gray-700">
                 Take 1 / 1
               </span>
             </div>
-            <span className="text-xs font-semibold text-green-600 uppercase tracking-wider">
+            <span className="text-[10px] font-semibold text-green-600 uppercase tracking-wider">
               Recorded
             </span>
           </div>
@@ -890,9 +892,8 @@ export default function InterviewFlow() {
           <div className="flex justify-center">
             <button
               onClick={handleNextQuestion}
-              className="flex items-center gap-2 bg-[#1146D9] hover:bg-[#0E3AB8] text-white px-6 py-2.5 rounded-sm text-sm font-semibold transition-colors"
+              className="bg-[#1146D9] hover:bg-[#0E3AB8] text-white px-6 py-2 rounded-sm text-xs font-semibold transition-colors"
             >
-              <Check className="w-4 h-4" strokeWidth={3} />
               Submit
             </button>
           </div>
